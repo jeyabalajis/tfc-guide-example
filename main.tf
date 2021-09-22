@@ -24,6 +24,6 @@ resource "aws_instance" "ubuntu" {
 
   tags = {
     Name                 = var.instance_name
-    "Linux Distribution" = "Canonical Ubuntu"
+    "Linux Distribution" = "Ubuntu"
   }
 }
