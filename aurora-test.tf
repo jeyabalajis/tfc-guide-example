@@ -80,7 +80,6 @@ module "rds-aurora" {
   skip_final_snapshot = true
 
   allowed_security_groups         = ["sg-12345678"]
-  allowed_security_groups_count   = 1
   storage_encrypted               = true
 
   vpc_id                = module.vpc.vpc_id
