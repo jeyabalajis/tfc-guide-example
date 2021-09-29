@@ -81,10 +81,7 @@ module "rds-aurora" {
 
   allowed_security_groups         = ["sg-12345678"]
   allowed_security_groups_count   = 1
-  instance_type                   = "db.r4.large"
   storage_encrypted               = true
-  apply_immediately               = true
-  monitoring_interval             = 10
 
   vpc_id                = module.vpc.vpc_id
   db_subnet_group_name  = module.vpc.database_subnet_group_name
