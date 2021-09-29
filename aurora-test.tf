@@ -1,5 +1,5 @@
 locals {
-    name = "dbiusa-casc-cn-aurora-postgres-dev"
+    name = "dbiusa-casc-cn-pg-dev"
     region = "us-east-1"
     tags = {
     ITOwnerEmail    = "ravi_kiranj@cargill.com"
