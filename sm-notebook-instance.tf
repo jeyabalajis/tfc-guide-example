@@ -43,6 +43,8 @@ resource "aws_sagemaker_notebook_instance" "smnbi_test" {
   name          = "my-notebook-instance-test"
   role_arn      = aws_iam_role.SageMakerNotebookExecutionRole.arn
   instance_type = "ml.t2.medium"
+  root_access   = "Disabled"
+  direct_internet_access = "Disabled"
 
   tags = {
     Name            = "smbi-test-001"
@@ -51,4 +53,10 @@ resource "aws_sagemaker_notebook_instance" "smnbi_test" {
     Environment     = "dev"
     Terraform       = "true"
   }
+}
+
+output "notebook_instance_url" {
+  description = "Notebook Instance URL"
+  value       = resource.smnbi_test.url
+  sensitive   = false
 }
