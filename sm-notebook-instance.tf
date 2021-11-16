@@ -1,6 +1,18 @@
 resource "aws_iam_role" "SageMakerNotebookExecutionRole" {
   name                = "sm-nbi-execution-role"
+  assume_role_policy  = data.aws_iam_policy_document.sm-nbi-assume-role-policy.json
   managed_policy_arns = [aws_iam_policy.policy_one.arn]
+}
+
+data "aws_iam_policy_document" "sm-nbi-assume-role-policy" {
+  statement {
+    actions = ["sts:AssumeRole"]
+
+    principals {
+      type        = "Service"
+      identifiers = ["sagemaker.amazonaws.com"]
+    }
+  }
 }
 
 resource "aws_iam_policy" "policy_one" {
