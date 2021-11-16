@@ -57,6 +57,6 @@ resource "aws_sagemaker_notebook_instance" "smnbi_test" {
 
 output "notebook_instance_url" {
   description = "Notebook Instance URL"
-  value       = resource.smnbi_test.url
+  value       = aws_sagemaker_notebook_instance.smnbi_test.url
   sensitive   = false
 }
