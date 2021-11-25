@@ -165,7 +165,7 @@ resource "aws_ecs_service" "mlflow-fargate-service" {
   load_balancer {
     target_group_arn = aws_lb_target_group.mlflow_ecs_task_target_group.arn
     container_name   = "mlflow-docker"
-    container_port   = 80
+    container_port   = 5000
   }
 }
 
