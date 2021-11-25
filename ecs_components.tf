@@ -209,7 +209,7 @@ resource "aws_security_group_rule" "mlflow_ecs_fargate_service_sg_ingress" {
   protocol                 = "tcp"
   security_group_id        = aws_security_group.mlflow_ecs_fargate_service_sg.id
   type                     = "ingress"
-  source_security_group_id = aws_security_group.mlflow_alb_sg.id
+  source_security_group_id = "test"
 }
 
 resource "aws_security_group_rule" "mlflow_ecs_fargate_service_sg_egress" {
