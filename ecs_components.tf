@@ -157,11 +157,6 @@ resource "aws_ecs_service" "mlflow-fargate-service" {
   platform_version    = "LATEST"
   scheduling_strategy = "REPLICA"
 
-  placement_constraints {
-    type       = "memberOf"
-    expression = "attribute:ecs.availability-zone in [us-east-1a, us-east-1b]"
-  }
-
   load_balancer {
     target_group_arn = aws_lb_target_group.mlflow_ecs_task_target_group.arn
     container_name   = "mlflow-docker"
