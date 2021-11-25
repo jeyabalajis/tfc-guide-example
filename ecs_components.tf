@@ -231,7 +231,10 @@ resource "aws_alb" "mlflow-ecs-alb" {
   internal           = true
   load_balancer_type = "application"
 
-  subnets         = var.platform_private_subnet_ids
+  subnets         = [
+    "subnet-0f9c53b51c9a3700f",
+    "subnet-01f7be53e286cfa40"
+  ]
   security_groups = [aws_security_group.mlflow_alb_sg.id]
 
 }
