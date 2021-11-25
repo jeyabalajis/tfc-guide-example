@@ -185,12 +185,12 @@ resource "aws_ecs_task_definition" "mlflow_fargate_task" {
 
   container_definitions = templatefile("./mlflow/containerDefs.json", {
     MLFLOW_DOCKER_IMAGE   = "docker.binrepo.cglcloud.in/mlops-mlflow-base-image:1.0.6"
-    CLOUD_WATCH_LOG_GROUP = aws_cloudwatch_log_group.mlflow_ecs_task_cw_log_group.name
-    BUCKET                = aws_s3_bucket.ml_flow_s3_artifact_backend.bucket_domain_name
-    USERNAME              = module.rds-aurora.rds_cluster_master_username
-    HOST                  = module.rds-aurora.rds_cluster_endpoint
-    PORT                  = var.mysql_default_port
-    DATABASE              = module.rds-aurora.rds_cluster_database_name
-    PASSWORD              = aws_secretsmanager_secret_version.password.arn
+    CLOUD_WATCH_LOG_GROUP = ""
+    BUCKET                = ""
+    USERNAME              = ""
+    HOST                  = ""
+    PORT                  = "5000"
+    DATABASE              = "DB"
+    PASSWORD              = "DBPWD"
   })
 }
