@@ -194,3 +194,37 @@ resource "aws_ecs_task_definition" "mlflow_fargate_task" {
     PASSWORD              = "DBPWD"
   })
 }
+
+resource "aws_security_group" "mlflow_ecs_fargate_service_sg" {
+  name        = "mlflow_ecs_fargate_service_sg"
+  description = "Allow TLS inbound traffic"
+  vpc_id      = var.platform_vpc_id
+
+}
+
+# Expose Fargate service security group to ALB Security Group(s)
+resource "aws_security_group_rule" "mlflow_ecs_fargate_service_sg_ingress" {
+  from_port                = 80
+  to_port                  = 80
+  protocol                 = "tcp"
+  security_group_id        = aws_security_group.mlflow_ecs_fargate_service_sg.id
+  type                     = "ingress"
+  source_security_group_id = aws_security_group.mlflow_alb_sg.id
+}
+
+resource "aws_security_group_rule" "mlflow_ecs_fargate_service_sg_egress" {
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  security_group_id = aws_security_group.mlflow_ecs_fargate_service_sg.id
+  type              = "egress"
+  cidr_blocks       = ["0.0.0.0/0"]
+}
+
+resource "aws_lb_target_group" "mlflow_ecs_task_target_group" {
+  name        = "mlflow-ecs-task-target-group"
+  port        = 80
+  protocol    = "HTTP"
+  target_type = "ip"
+  vpc_id      = "vpc-0ccfae2ee14d362e9"
+}
