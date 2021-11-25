@@ -143,8 +143,7 @@ resource "aws_ecs_service" "mlflow-fargate-service" {
   enable_ecs_managed_tags            = true
   enable_execute_command             = false
 
-  iam_role = aws_iam_role.mlflow_fargate_task_execution_role.arn
-  depends_on = [aws_iam_role.mlflow_fargate_task_execution_role]
+  execution_role_arn = aws_iam_role.mlflow_fargate_task_execution_role.arn
 
   launch_type = "FARGATE"
 
@@ -209,7 +208,7 @@ resource "aws_security_group_rule" "mlflow_ecs_fargate_service_sg_ingress" {
   protocol                 = "tcp"
   security_group_id        = aws_security_group.mlflow_ecs_fargate_service_sg.id
   type                     = "ingress"
-  source_security_group_id = "test"
+  source_security_group_id = aws_security_group.mlflow_ecs_fargate_service_sg.id
 }
 
 resource "aws_security_group_rule" "mlflow_ecs_fargate_service_sg_egress" {
