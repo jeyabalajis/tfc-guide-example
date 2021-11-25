@@ -198,7 +198,7 @@ resource "aws_ecs_task_definition" "mlflow_fargate_task" {
 resource "aws_security_group" "mlflow_ecs_fargate_service_sg" {
   name        = "mlflow_ecs_fargate_service_sg"
   description = "Allow TLS inbound traffic"
-  vpc_id      = var.platform_vpc_id
+  vpc_id      = "vpc-0ccfae2ee14d362e9"
 
 }
 
