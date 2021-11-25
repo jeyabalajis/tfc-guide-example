@@ -225,3 +225,48 @@ resource "aws_lb_target_group" "mlflow_ecs_task_target_group" {
   target_type = "ip"
   vpc_id      = "vpc-0ccfae2ee14d362e9"
 }
+
+resource "aws_alb" "mlflow-ecs-alb" {
+  name               = "mlflow-ecs-alb"
+  internal           = true
+  load_balancer_type = "application"
+
+  subnets         = var.platform_private_subnet_ids
+  security_groups = [aws_security_group.mlflow_alb_sg.id]
+
+}
+
+resource "aws_lb_listener" "mlflow-ecs-lb-listener" {
+  load_balancer_arn = aws_alb.mlflow-ecs-alb.arn
+  port              = "80"
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.mlflow_ecs_task_target_group.arn
+  }
+}
+
+resource "aws_security_group" "mlflow_alb_sg" {
+  name        = "mlflow_alb_sg"
+  description = "Allow TLS inbound traffic"
+  vpc_id      = "vpc-0ccfae2ee14d362e9"
+
+}
+
+# Expose ALB to only Notebook Instance Security Group
+resource "aws_security_group_rule" "mlflow_alb_sg_ingress" {
+  from_port                = 80
+  to_port                  = 80
+  protocol                 = "tcp"
+  security_group_id        = aws_security_group.mlflow_alb_sg.id
+  type                     = "ingress"
+  cidr_blocks       = ["0.0.0.0/0"]
+}
+
+resource "aws_security_group_rule" "mlflow_alb_sg_egress" {
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  security_group_id = aws_security_group.mlflow_alb_sg.id
+  type              = "egress"
+  cidr_blocks       = ["0.0.0.0/0"]
+}
