@@ -143,8 +143,6 @@ resource "aws_ecs_service" "mlflow-fargate-service" {
   enable_ecs_managed_tags            = true
   enable_execute_command             = false
 
-  execution_role_arn = aws_iam_role.mlflow_fargate_task_execution_role.arn
-
   launch_type = "FARGATE"
 
   network_configuration {
