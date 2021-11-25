@@ -185,10 +185,10 @@ resource "aws_ecs_task_definition" "mlflow_fargate_task" {
 
   container_definitions = templatefile("./mlflow/containerDefs.json", {
     MLFLOW_DOCKER_IMAGE   = "docker.binrepo.cglcloud.in/mlops-mlflow-base-image:1.0.6"
-    CLOUD_WATCH_LOG_GROUP = ""
-    BUCKET                = ""
-    USERNAME              = ""
-    HOST                  = ""
+    CLOUD_WATCH_LOG_GROUP = aws_cloudwatch_log_group.mlflow_ecs_task_cw_log_group.arn
+    BUCKET                = "TESTBUCKET"
+    USERNAME              = "TESTUSER"
+    HOST                  = "TESTHOST"
     PORT                  = "5000"
     DATABASE              = "DB"
     PASSWORD              = "DBPWD"
